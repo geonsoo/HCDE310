@@ -1,4 +1,5 @@
 ###### HCDE310, A15: Homework 6 Exercises
+### Geon Soo Park
 ### version 1.2
 
 import urllib, urllib2, json
@@ -6,6 +7,19 @@ import urllib, urllib2, json
 def pretty(obj):
     return json.dumps(obj, sort_keys=True, indent=2)
 
+def safeGet(url):
+    try:
+        return urllib2.urlopen(url)
+    except urllib2.URLError, e:
+        if hasattr(e,"code"):
+            print "The server couldn't fulfill the request."
+            print "Error code: ", e.code
+        elif hasattr(e,'reason'):
+            print "We failed to reach a server"
+            print "Reason: ", e.reason
+        return None
+        
+        
 #### Exercises: A RESTful API
 
 # The FAA has put out a REST API for accessing current information about US
@@ -30,8 +44,9 @@ def pretty(obj):
 #      and print it out.  Your output should look like the screenshot.
 print '-------1a--------'
 
-# put your code here
-# print param_str
+d = {'format':'json'}
+param_str = urllib.urlencode(d)
+print param_str
 
 # (1b) Add (concatenate) the airport and the param_str to the base URL:
 #        http://services.faa.gov/airport/status/
@@ -39,18 +54,18 @@ print '-------1a--------'
 print '-------1b--------'
 baseurl = 'http://services.faa.gov/airport/status/'
 airport = 'SEA'
-# put your code here
-#print airport_request
+airport_request = baseurl + airport + '?' + param_str
+print airport_request
 
 #uncomment this line to check if you generated the correct url
-#print airport_request == 'http://services.faa.gov/airport/status/SEA?format=json'
+print airport_request == 'http://services.faa.gov/airport/status/SEA?format=json'
 ## Grabbing data off the web
 # (2)  Use urllib2.urlopen() retrieve data from the address airport_request.
 #      Store the data in a string called airport_json_str.  Print it out.
 print '-------2---------'
 
-# put your code here
-#print airport_json_str
+airport_json_str = urllib2.urlopen(airport_request).read()
+print airport_json_str
 
 ## Converting a JSON string to a dictionary
 # (3)  Use json.loads() to convert airport_json_str into a dictionary.
@@ -59,8 +74,8 @@ print '-------2---------'
 #      a nicely indented format
 print '-------3---------'
 
-# put your code here
-#print pretty(airport_data)
+airport_data = json.loads(airport_json_str)
+print pretty(airport_data)
 
 ## Extracting relevant information from a dictionary
 # (4)  Extract and print the name, city, state, and the reason field from within the status
@@ -68,8 +83,9 @@ print '-------3---------'
 #      instructions, though the contents will different, depending on when you
 #      query.
 print '-------4---------'
-
-# put your code here
+data = airport_data
+print "Airport: " + data['name'] + " (" + data['city'] + ", " + data['state'] + ")"
+print "Reason: " + data['status']['reason']
 
 print '-------5a--------'
 
@@ -77,10 +93,18 @@ print '-------5a--------'
 # (5a) Write a function called getAirport() that accepts a three-letter airport
 # code and returns a data dictionary.  Uncomment out the test line.
 
-# put your code here
+def getAirport(airport_code):
+    d = {'format':'json'}
+    param_str = urllib.urlencode(d)
+    baseurl = 'http://services.faa.gov/airport/status/'
+    airport = airport_code
+    airport_request = baseurl + airport + '?' + param_str
+    airport_json_str = urllib2.urlopen(airport_request).read()
+    airport_data = json.loads(airport_json_str)
+    return airport_data
 #
 # The following line of code tests getAirport():
-#print pretty(getAirport('SEA'))
+print pretty(getAirport('SEA'))
 
 print '-------5b--------'
 
@@ -88,10 +112,13 @@ print '-------5b--------'
 #      and prints out the info as in exercise 4.
 #      It should call getAirport().  Uncomment the test code to try it out.
 
-# put your code here
+def printAirport(airport_name):
+    data = getAirport(airport_name)
+    print "Airport: " + data['name'] + " (" + data['city'] + ", " + data['state'] + ")"
+    print "Reason: " + data['status']['reason']
 
 # The following line of code tests printAirport():
-#printAirport('SFO')
+printAirport('SFO')
 print '-------5c--------'
 
 
@@ -100,8 +127,8 @@ print '-------5c--------'
 #      Your output should match the format of the sample output
 
 fav_airports = ['SEA', 'BOS', 'JFK', 'SJC']
-
-# put your code here
+for each in fav_airports:
+    printAirport(each)
 
 
 # Error handling and exceptions
@@ -112,8 +139,19 @@ fav_airports = ['SEA', 'BOS', 'JFK', 'SJC']
 #      e.g. your block should catch urllib2.URLError exceptions, and print out
 #      the appropriate reason or error code
 print '-------6a--------'
-#x = urllib2.urlopen('http://hcde.washington.edu/hcdestuff')
 
+try:
+    x = urllib2.urlopen('http://hcde.washington.edu/hcdestuff')
+except urllib2.URLError, e:
+    if hasattr(e,"code"):
+        print "The server couldn't fulfill the request."
+        print "Error code: ", e.code
+    elif hasattr(e,'reason'):
+        print "We failed to reach a server"
+        print "Reason: ", e.reason
+
+        
+    
 # (6b) Define a function getAirportSafe().  It calls getAirport, but catches any
 #     errors that might occur (i.e., use try/except around the whole getAirport
 #     function call). If an error occurs, your function should print 'Error
@@ -122,17 +160,28 @@ print '-------6a--------'
 #     If you reach a server but cannot find the airport, your error message should
 #     include the airport code.
 print '-------6b--------'
+def getAirportSafe(airport_name):
+    try:
+        return getAirport(airport_name)
 
-# put your code here
+    except Exception as e:
+        print "Error trying to retrieve airport:", airport_name
+        return None
 
 # Uncomment the following code to test getAirportSafe():
-#print getAirportSafe('xy')
-#print getAirportSafe('SEA')
+print getAirportSafe('xy')
+print getAirportSafe('SEA')
 
 print '-------6c--------'
 #(6c) Now define a function printAirportSafe that calls getAirportSafe and, if there's no error, prints the abbreviated data as in printAirport
 
-print '-------6d--------'
+def printAirportSafe(airport_name):
+    if getAirportSafe(airport_name) != None:
+        data = getAirportSafe(airport_name)
+        print "Airport: " + data['name'] + " (" + data['city'] + ", " + data['state'] + ")"
+        print "Reason: " + data['status']['reason']
+        
+#print '-------6d--------'
 # Try out your own airports (6d) Create a list including at least
 # your 3 top airports  and one that doesn't exist. 
 # Print them out using the printAirportSafe()
@@ -140,9 +189,9 @@ print '-------6d--------'
 
 print '-------6d--------'
 # uncomment this code and fill in your_favs
-#your_favs = []
-#for a in your_favs:
-#    printAirportSafe(a)
+your_favs = ['JFK', 'ABI', 'SEA', 'ICO']
+for a in your_favs:
+    printAirportSafe(a)
 
 
 ####Now you're ready for the next part, where you retrieve data from an API of

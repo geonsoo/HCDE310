@@ -1,3 +1,5 @@
+#Geon Soo Park
+#1260164
 ### part 1: exercises
 dinocount = {'triceratops': 2, 'tyrannosaurus rex': 1, 'dilophosaurus': 2, 'parasaurolophus': 4, 'gallimimus': 12}
 
@@ -8,12 +10,17 @@ print "== 1 =="
 # associated with key 'gallimimus' in the dictionary dinocount). Hint: this is just
 # one simple line of code.
 
+print dinocount['gallimimus']
+
 print "== 2 =="
 # 2: incrementing the value of a dictionary at a key.
 
 # Write code to increment the number of triceratops in the store by one (nature
 # always finds a way). In other words, add 1 to the existing value of dinocount at
 # key 'triceratops').  Then, print out the number of triceratops in the zoo.
+
+dinocount['triceratops'] += 1
+print dinocount['triceratops']
 
 print "== 3 =="
 # 3: adding an entry to a dictionary. 
@@ -24,6 +31,9 @@ print "== 3 =="
 # Write code to insert a new key, 'velociraptor' into the dictionary, with a value of 3.
 # Verify that it worked by printing out the value associated with the key 'velociraptor'
 
+dinocount['velociraptor'] = 3
+print dinocount['velociraptor'] 
+
 print "== 4 =="
 # 4: concatenating strings and integers. 
 
@@ -32,17 +42,27 @@ print "== 4 =="
 # Hint: you will need to use the + string concatenation operator in conjunction
 # with str() or another string formatting instruction.
 
+# question
+print 'Parasaurolophus' ': ' + str(dinocount['parasaurolophus'])
+ 
+
 print "== 5 =="
 # 5: iterating over keys in a dictionary.  
 
 # Write code that prints each kind of dinosaur (key),
 # one line at a time using a for loop.
 
+for dinosaur_name in dinocount.keys():
+    print dinosaur_name
+    
 print "== 6 =="
 # 6: iterating over keys to access values in a dictionary. 
 
 # Write code that prints each kind of dinosaur (key), followed by a colon and the
 # number of that kind of dinosaur (e.g., parasaurolophus: 3), one line at a time using a for loop.
+
+for keys, values in dinocount.items(): 
+    print keys + ':', values
 
 print "== 7 =="
 # 7: testing membership in a dictionary.
@@ -53,10 +73,19 @@ print "== 7 =="
 # If the test yields false, it should print "Sorry, no velociraptor in the zoo."
 # Do the same thing for the key 'stegosaurus'.
 
+if dinocount.has_key('velociraptor'):
+    print 'velociraptor' + ':', dinocount['velociraptor']
+else:
+    print "Sorry, no velociraptor in the zoo"
+
+if dinocount.has_key('stegosaurus'):
+    print 'stegosaurus' + ':', dinocount['stegosaurus']
+else:
+    print "Sorry, no stegosaurus in the zoo."
 
 print "== 8 =="
 # 8: default values
-
+# put your code here
 # We have a list of potential dinosaurs (in the list potentialdinosaurs)
 # and we want to check whether the dinosaur exists within the zoo (dictionary).
 # If it is, we want to print "dinosaur: #", where dinosaur is the 
@@ -65,9 +94,12 @@ print "== 8 =="
 # Hint: you can use default values here to make this take less code!
 
 potentialdinosaurs = ['velociraptor','tyrannosaurus rex','brachiosaurus','archaeopteryx','gallimimus']
-
-# put your code here
-    
+for dinosaur_name in potentialdinosaurs:
+    if dinocount.has_key(dinosaur_name):
+        print dinosaur_name + ': ' + str(dinocount[dinosaur_name])
+    else: 
+        print dinosaur_name + ': 0' 
+        
 print '=== 9 ==='
 # 9: printing comma separated data from a dictionary.
 # You may have worked with comma separated values before: they are basically 
@@ -84,7 +116,8 @@ print '=== 9 ==='
 #
 # put your code here
 
-
+for keys, values in dinocount.items(): 
+    print keys + ',', values
 
 print '=== 10 ==='
 # 10: saving a dictionary to a CSV file
@@ -93,4 +126,9 @@ print '=== 10 ==='
 # modification to the string you are writing out to the file, to add linebreaks)
 #
 # put your code here
+
+f = open('dinocise.csv','w')
+for keys, values in dinocount.items():
+    f.write(keys + ',' + str(values) + ',' + '\n')
+f.close()
     

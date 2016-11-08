@@ -1,3 +1,5 @@
+#Geon Soo Park
+# HCDE 310
 ### main assignment (part 3)
 
 # Earlier this week, you learned to think about data processing and how to perform
@@ -28,15 +30,25 @@ print "----------"
 # Facebook group! Run your program work on hw2feed.txt and sherlock.txt. Take a
 # screenshot of the output when running it on hw2feed.txt
 
-fname = "test.txt"
+#fname = "test.txt"
+#fname = "hw2feed.txt"
+#When grading this program uncomment code above and comment below
+fname = "/Users/CalebP/CourseFiles/Homeworks/hw2/hw2feed.txt"
 #fname = raw_input("Please enter a file name: ")
+
 numChars = 0
 numLines = 0
 numWords = 0
 
-# fill in the rest here
-
-
+file_name = open(fname, 'r')
+for line in file_name.readlines():
+    numLines += 1
+    for word in line.split():
+        numWords += 1
+    for chr in line:
+        numChars += len(chr)
+   # print(line);
+   # print(numLines);
 # output code below is provided for you; you should not edit this
 print numChars, 'characters'
 print numLines, 'lines'

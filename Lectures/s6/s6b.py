@@ -30,3 +30,6 @@ print Woofus.woofcount
 Woofus.bark()
 
 
+Fluffy = Dog(1, "Ruff")
+Woofus = Dog(3)
+Rover = Dog (4, "Arf")

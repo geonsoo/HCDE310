@@ -1,3 +1,6 @@
+#Geon Soo Park
+#1260164
+
 import json
 
 ###################
@@ -25,7 +28,6 @@ def pretty(obj):
 ## This loads the Facebook group data as a list of dictionaries
 posts = json.load(open('hw5feed.json'))['data']
 
-
 ## This extracts 3 dictionaries from the list of posts, which you will use
 ## as examples throughout the homework
 
@@ -35,7 +37,7 @@ mypost3 = posts[39]           # this is a post with likes and a comment
 
 ## Here is what a post dictionary looks like
 print "==== example post ===="
-print pretty(mypost1)
+#print pretty(mypost1)
 
 ## posts is a list of dictionaries
 print 'there are', len(posts), 'posts!'
@@ -47,23 +49,23 @@ gap('building block 1')
 
 ## write code that extracts and prints the data associated with the 'from'
 ## key in mypost1
-#<your-code-here>
+print mypost1['from']
 
 
 ## write code that extracts and prints the name of the user who posted mypost1
-#<your-code-here>
+print mypost1['from']['name']
 
 
 ## write a function postPoster() that extracts and returns the short name of
 ## the post from a post dictionary. 
 ## Use the shortname function within your function.
-#<your-code-here>
-
+def postPoster(mypost):
+    return shortname(mypost['from']['name'])
 
 ## uncomment the following three lines to test
-#print postPoster(mypost1)
-#print postPoster(mypost2)
-#print postPoster(mypost3)
+print postPoster(mypost1)
+print postPoster(mypost2)
+print postPoster(mypost3)
 
 ####################
 ### Building block 2
@@ -71,17 +73,17 @@ gap('building block 1')
 gap('building block 2')
 
 ## some posts have comments
-print mypost1['comments']
+#print mypost1['comments']
 
 ## other posts don't
 ## if you uncomment the following line, you'll get a
 ## key error -- the comments key isn't defined when
 ## there are no comments
-#print mypost2['comments']
+##print mypost2['comments']
 
 ## here are what comment dictionaries look like
-gap("a post's comment data structure")
-print pretty(mypost1['comments'])
+#gap("a post's comment data structure")
+#print pretty(mypost1['comments'])
 
 ## this is how you get the number of comments from a comment dictionary
 ## if, and only if, that dictionary has comments (otherwise you get
@@ -90,11 +92,16 @@ print "Comment count:", len(mypost1['comments']['data'])
 
 ## write a function called postCommentCount() that extracts and
 ## returns the number of comments from a post dictionary.
-#<your-code-here>
-
+def postCommentCount(post):
+   if 'comments' in post:
+        return len(post['comments']['data'])
+   else: 
+        return 0
+    
+    
 ## uncomment the following two lines of code. they should print 1 and 0
-#print postCommentCount(mypost1)
-#print postCommentCount(mypost2)
+print postCommentCount(mypost1)
+print postCommentCount(mypost2)
 
 ### Building block 3
 # extracting like counts (this similar to comment counts, but
@@ -102,23 +109,29 @@ print "Comment count:", len(mypost1['comments']['data'])
 
 ## here are what 'like' dictionaries contains
 gap("a post's likes data structure")
-print pretty(mypost3['likes'])
+#print pretty(mypost3['likes'])
 
 ## but some posts don't have likes. You get an error when
 ## you uncomment the following line
 #print pretty(mypost1['likes'])
 
 ## write code that gets the number of likes from mypost3
-#<your-code-here>
+
+print "Likes: " + str(len(mypost3['likes']['data']))
 
 ## write a function called postLikeCount() that extracts and
 ## returns the number of likes from a post dictionary
 ## if the dictionary does not contain any likes, it should return 0
-#<your-code-here>
+def postLikeCount(mypost):
+    if 'likes' in mypost:
+        return len(mypost['likes']['data'])
+    else: 
+        return 0
+    
 
 ## the following two lines should print 0 and 12 when uncommented
-#print postLikeCount(mypost1)
-#print postLikeCount(mypost3)
+print postLikeCount(mypost1)
+print postLikeCount(mypost3)
 
 ###########################
 ### Putting it all together
@@ -128,5 +141,11 @@ print pretty(mypost3['likes'])
 #   Shortname posted to the group and received X comments and Y likes
 #   with one line per post
 gap("Task")
-#<your-code-here>
+
+for mypost in posts:
+    name = postPoster(mypost)
+    comments = postCommentCount(mypost)
+    likes = postLikeCount(mypost)
+    print "%s posted to the group and received %d comments and %d likes."%(name, comments, likes)
+
 

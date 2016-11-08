@@ -1,3 +1,4 @@
+#Geon Soo Park
 ### Nesting
 
 print '=== 1 ==='
@@ -33,8 +34,14 @@ dinosaurs= {}
 # You may assume that every dinosaur is a carnivore or herbivore, but for an extra challenge
 # try to do this without that assumption. 
 #
-# put your code here
 
+for group, name in dinolist:
+    if group not in dinosaurs:
+        dinosaurs[group] = {}
+    if name not in dinosaurs[group]:
+        dinosaurs[group][name] = 1
+    else:
+       dinosaurs[group][name] += 1
 print dinosaurs
 
 ### Objects
@@ -59,21 +66,29 @@ print '=== 2a ==='
 # HINT: in methods, you can create default parameters, just like with functions.
 
 # uncomment the next line define your Book class there
-#class Book():
-
+class Book():
+    def __init__(self, title, author, year=None, publisher=None):
+        self.title = title
+        self.author = author
+        self.year = year
+        self.publisher = publisher
+        
+    def cite(self): 
+        return "%s. (%d). %s. %s."%(self.author, self.year, self.title, self.publisher)
+        
 # you can uncomment the following lines to see if this works
 # you can compare the output with the output in the PDF
-#nudge = Book(title="Nudge",author="Thaler & Sunstein")
-#print nudge.title
-#print nudge.author
-#print nudge.year
-#print nudge.publisher
+nudge = Book(title="Nudge",author="Thaler & Sunstein")
+print nudge.title
+print nudge.author
+print nudge.year
+print nudge.publisher
 
-#nudge = Book(title="Nudge",author="Thaler & Sunstein",year=2008,publisher="Penguin")
-#print nudge.title
-#print nudge.author
-#print nudge.year
-#print nudge.publisher
+nudge = Book(title="Nudge",author="Thaler & Sunstein",year=2008,publisher="Penguin")
+print nudge.title
+print nudge.author
+print nudge.year
+print nudge.publisher
 
 print '=== 2b ==='
 # Now we will add a method to generate the citation. The method should be called "cite".
@@ -83,8 +98,7 @@ print '=== 2b ==='
 
 # Then, uncomment the next line to test. This should print the citation if you
 # have properly defined the Book.cite() method.
-#print nudge.cite()
-
+print nudge.cite()
 
 ### JSON 
 print '=== 3 ==='
@@ -99,19 +113,32 @@ print "--- 3a ---"
 # Print its contents. It's a list of metadata about movies.
 ## after you are done, comment out the print statement (so it no longer prints)
 
+movie = json.load(open('hw4example.json'))
+#print movie
+
 print "--- 3b ---"
 ##2. print the first element of the JSON file. it's metadata about a movie.
 ## after you are done, comment out this exercise (so it no longer prints)
+
+#print movie[0]
 
 print "--- 3c ---"
 ##3. print the keys and values in the format key: value of the first element of the json file 
 #   (so the attributes of the first movie get printed).
 #   e.g., Title: Little Miss Sunshine
 #   Order does not matter
+for key, value in movie[0].items():
+    print key + ":", value
 
 print "--- 3d ---"
 ##4. write a *function* to print only the title, genres, and IMDB rating, and Metascore for a movie
 ### It should print these details in that order.
+def movie_detail(data):
+    print "Title: " + data["Title"]
+    print "Genres: " + data["Genre"]
+    print "imdbRating: " + data["imdbRating"]
+    print "Metascore: " + data["Metascore"]
+
 
 print "--- 3e ---"
 ##5. use the function from (3d) to print the data for each movie
@@ -121,15 +148,31 @@ print "--- 3e ---"
 #   or by using .encode('utf-8'), e.g., fixedstring = mystring.encode('utf-8'), where mystring is
 #   the problematic string.
 
+for each in movie:
+    movie_detail(each)
+
 print "--- 3facebook ---"
 #Now, we're going to switch to hw4fbpost.json. This file contains just one post and related comments from
 #the class facebook feed.
 #
 #Load the contents of hw4fbpost.json, convert it to a dictionary, and print the keys
 #
+facebook = dict(json.load(open('hw4fbpost.json')))
+print facebook.keys()
+
 print "--- 3g ---"
 # Print the URL for the picture in the message. 
+print facebook["picture"]
 
 print "--- 3h ---"
 # Write code to determine the total number of comments on the post and print it. 
 # Pay attention to types and the level of nesting in here.
+total = 0
+
+for i in facebook["comments"]["data"]:
+    total += 1
+print "comments: " + str(total)
+    
+
+
+

@@ -1,5 +1,5 @@
-
-
+#Geon Soo Park
+#1260164
 ###############################################################
 ## part 2: exercises
 
@@ -15,13 +15,12 @@ print '=== 1 ==='
 # mention a parameter, s, which becomes the parameter name in the function
 # definition.
 
-#def printExcited(s):
-#    <indented code block here>
-
+def printExcited(s):
+ print s + "!"
 
 # uncomment the next two lines to check if you correctly defined printExcited():
-#printExcited('a word')
-#printExcited('nice job')
+printExcited('a word')
+printExcited('nice job')
 
 print "=== 2 ==="
 # 2: returning a value
@@ -32,9 +31,12 @@ print "=== 2 ==="
 
 # define excitedString() here
 
+def excitedString(s):
+    return s + "!"
+    
 # uncomment the next two lines of code to check if you correctly defined the function
-#print excitedString('progress')
-#print excitedString('nicer job')
+print excitedString('progress')
+print excitedString('nicer job')
 
 print "=== 3 ==="
 # 3: function with two parameters that returns a value
@@ -45,10 +47,12 @@ print "=== 3 ==="
 #   s: the string to take a slice of
 
 # define charsAfter() here
-
+def charsAfter(num, s):
+    return s[num:]
+    
 # uncomment the following two lines of code to check if you correctly defined the function
 #try it with different values for X and Y
 X = 6
 Y = 4
-#print charsAfter(Y, 'not fun')
-#print charsAfter(X, 'from: John Porter')
+print charsAfter(Y, 'not fun')
+print charsAfter(X, 'from: John Porter')

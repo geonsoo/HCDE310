@@ -1,4 +1,5 @@
-
+#Geon Soo Park
+#1260164
 ### you will need this function later in the homework
 def stripWordPunctuation(word):
     return word.strip(".,()<>\"\\'~?!;*:[]-+/&")
@@ -16,12 +17,13 @@ print "== part 3 =="
 # parameter and return the field type (either post, comment, or from).
 
 def fieldType(line):
-    # fill in your code here
+    word = line.split()
+    return stripWordPunctuation(word[0])
 
 # You can uncomment and test your function with these lines
-#print fieldType("from: Sean")
-#print fieldType("post: Hi everyone")
-#print fieldType("comment: Thanks!")
+print fieldType("from: Sean")
+print fieldType("post: Hi everyone")
+print fieldType("comment: Thanks!")
 
 print "== part 4 =="
 # Find out and print how many posts there are
@@ -33,15 +35,19 @@ print "== part 4 =="
 #
 
 posts = 0
-comment = 0
-
+comments = 0
 fname = "hw3feed.txt"
+
 f = open(fname,'r')
+for each_line in f:
+    word = each_line.split()
+    if stripWordPunctuation(word[0]) == "post":
+        posts += 1
+    elif stripWordPunctuation(word[0]) == "comment":
+        comments += 1
 
-# Fill in your code here.
-
-print "Total posts: %d"%comments
-print "Total comments: %d"%posts
+print "Total posts: %d"%posts
+print "Total comments: %d"%comments
 
 print "== part 5 =="
 ### part 5: printing users
@@ -57,9 +63,14 @@ print "== part 5 =="
 
 fname = "hw3feed.txt"
 f = open(fname,'r')
-#fill in code here
+
+for each_line in f:
+    each_word = each_line.split()
+    if stripWordPunctuation(each_word[0]) == "from":
+        print " ".join(each_word[1:])
 
 
+#question!!!
 print "== part 6 =="
 ### part 6: counting poster contribution frequency
 # See the instructions in the PDF file. They are easier to follow with
@@ -67,16 +78,19 @@ print "== part 6 =="
 
 pc_count = {}
 f = open(fname,'r')
-
 # read in and count the total number of posts and comments for each user
-
-#fill in code here
-
-
+for each_line in f:
+    word = each_line.split()
+    if stripWordPunctuation(word[0]) == "from":
+        name = " ".join(word[1:])   
+        if name in pc_count:
+            pc_count[name] += 1
+        else:
+           pc_count[name] = 1 
+        
 # print the number of times each user posted
-
-#fill in code here
-
+for key, value in pc_count.items(): 
+    print key + ": " + str(value)
 
 # part 6 - Just for fun: how many unique posters were there?
 # (note this question is optional - but it's one line of code)
@@ -95,16 +109,20 @@ print "== part 7 =="
 
 postWordCount = {}
 f = open(fname,'r')
-
 # read in and count of times each word appeared
-
-#fill in code here
-
+for each_line in f:
+    word = each_line.split()
+    if stripWordPunctuation(word[0]) == "post":
+        for i in word[1:]: 
+            if stripWordPunctuation(i.lower()) in postWordCount:
+                postWordCount[stripWordPunctuation(i.lower())] += 1
+            else:
+                postWordCount[stripWordPunctuation(i.lower())] = 1 
 
 # print the number of times each word appeared
 
-#fill in code here
-
+for key, value in postWordCount.items(): 
+    print key + ": " + str(value)
 
 print "== part 8 =="
 ### part 8: counting word frequency in comments and posts
@@ -123,16 +141,27 @@ print "== part 8 =="
 # to meet the requirements for this part.
 
 # uncomment and begin editing from the next line:
-#def wordFreq
+def wordFreq(file_name, key):
+    f = open(file_name,'r')
+    postWordCount = {}
+    # read in and count of times each word appeared
+    for each_line in f:
+        word = each_line.split()
+        if stripWordPunctuation(word[0]) == key:
+            for the_same in word[1:]: 
+                if stripWordPunctuation(the_same.lower()) in postWordCount:
+                    postWordCount[stripWordPunctuation(the_same.lower())] += 1
+                else:
+                    postWordCount[stripWordPunctuation(the_same.lower())] = 1 
+    return postWordCount
 
 # to test ,you can uncomment and run these  lines:
-#if wordFreq(fname,'post')["anyone"] == 9 and wordFreq(fname,'post')["eclipse"] == 5:
-#    print "Looks like wordFreq() works fine for posts"
-#else:
-#    print "We got some errors with wordFreq() for posts."
-#  
-#if wordFreq(fname,'comment')["file"] == 24 and wordFreq(fname,'comment')["if"] == 39:
-#    print "Looks like wordFreq() works fine for comments"
-#else:
-#    print "We got some errors with wordFreq() for comments."
-
+if wordFreq(fname,'post')["anyone"] == 9 and wordFreq(fname,'post')["eclipse"] == 5:
+    print "Looks like wordFreq() works fine for posts"
+else:
+    print "We got some errors with wordFreq() for posts."
+ 
+if wordFreq(fname,'comment')["file"] == 24 and wordFreq(fname,'comment')["if"] == 39:
+    print "Looks like wordFreq() works fine for comments"
+else:
+    print "We got some errors with wordFreq() for comments."

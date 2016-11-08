@@ -1,4 +1,4 @@
-f = open("sherlock.txt",'r')
+f = open("/Users/CalebP/CourseFiles/Lectures/s4/sherlock.txt",'r')
 fstring = f.read()    #assign fstring long string with the whole file
 
 
@@ -16,6 +16,13 @@ wordlist = fstring.split()
 
 ### fill in your code here
 
+total = 0
+
+for x in wordlist:
+    if x.lower() == 'elementary' or x.lower() == 'obviously':
+        total += 1
+    
+print total
 
 ### Challenge 1: modify the code below to print
 ### all of the words that appear more than 10 times
