@@ -1,0 +1,12 @@
+<html><head>
+<title>{{title}}</title>
+<link rel='stylesheet' href='assets/mystyles.css' type='text/css' />
+</head>
+<body>
+<div class = 'tagcloud'>
+<div class = 'tagcloudtitle'>Terms sized by scores</div>
+ {% for term, size in terms %}
+ <span class='term' style='font-size: {{size}}em'>{{term}}</span>
+ {% endfor %}
+</div>
+</body></html>

@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>Family weather!</title>
+<style>
+        body {font-family:Helvetica,Arial,sans-serif}
+        h1 {font-size:1.1em;margin:0em}
+        .fammember{
+			width:150px;height:150px;
+			float:left;
+			margin:0.2em;
+			position:relative;}
+        .who, .temp {
+			width:100%; 
+			position:absolute; 
+			background-color: rgba(0,0,0,0.5);
+			color:rgb(255,255,255); 
+			padding:0.1em;
+		}
+        .who{top:0; left:0;text-align:left;}
+        .temp{bottom:0; right:0;text-align:right;}
+        </style>
+</head>
+<body>
+{% for familymember in family %}
+	<div class='fammember' style="background-image: url('{{familymember.photo}}');">
+	  <h1 class='who'>{{familymember.name}}</h1>
+  	  <div class='temp'>
+		  {{familymember.currently.summary}}, {{familymember.currently.temperature}}&deg;F
+	  </div>
+  	</div>
+{% endfor %}
+</body>
+</html>

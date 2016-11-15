@@ -1,0 +1,16 @@
+<html>
+<title>This is an html template.</title>
+<body>
+<p><a href="{{department.url}}">{{department.name}}</a>, <a href="{{university.url}}">{{university.name}}</a></p>
+
+{% if programs|length > 0 %}
+<p>Programs include:</p>
+<ul>
+	{% for program in programs %}
+	<li>{{program}}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+</body>
+</html>
