@@ -1,0 +1,39 @@
+<html>
+<head>
+	<title>Forecast</title>
+	<link rel="stylesheet" type="text/css" href="/assets/style.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<form id="searchbox" method="get" action="" name="search">
+	<h1>Search</h1>
+	<label for="lat">Latitude: </label><input type="text" id="lat" name="lat"/>
+	<label for="long">Longitude: </label><input type="text" id="lon" name="lon"/>
+	<input type="submit" value="Search" name="submit" />
+</form>
+<div id="message"></div>
+<div id="results">
+</div>
+   <script>
+	$("form#searchbox").submit(function( event ) {
+		event.preventDefault();
+		url = "/api/results.json?"+$(this).serialize();
+		$.getJSON(url).done(function(data){
+			$("#results").empty();
+			$("#message").empty();
+			if ("message" in data){
+				$("#message").append(data.message);
+			};
+			if ("forecast" in data){
+				var caption = "<strong>Forecast for:" + data.loc.lat+","+data.loc.lon+"</strong>";
+				$("#results").append(caption);
+				$.each(data.forecast, function(i, forecast){
+					var text = "<tr><th>"+forecast.label+"</th><td>"+forecast.content+"</td></tr>";
+					$("#results").append(text);
+				});
+			};
+		});
+	});
+	</script>	
+</body>
+</html>

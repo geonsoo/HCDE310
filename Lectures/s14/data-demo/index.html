@@ -1,0 +1,25 @@
+<html>
+<head>
+	<title>Here is a weather forecast!</title>
+	<link rel="stylesheet" type="text/css" href="/assets/style.css" />
+</head>
+<body>
+{% if message %}
+<p class="errormsg">{{message}}</p>
+{% else %}
+<div class="forecast">
+	<table>
+		<tr>
+			<th>Now:</td><td>{{forecast.currently.summary}}, {{forecast.currently.temperature}}&deg;F</td>
+		</tr>
+		<tr>
+			<th>Rest of today:</th><td>{{forecast.hourly.summary}}</td>
+		</tr>
+		<tr>
+			<th>Next couple of days:</th><td>{{forecast.daily.summary}}</td>
+		</tr>
+	</table>
+</div>
+{% endif %}
+</body>
+</html>

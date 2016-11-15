@@ -1,0 +1,15 @@
+{
+	{%if message%}
+	"message":"{{message}}"
+	{% else %}
+	"loc":{
+		"lat":{{lat}},"lon":{{lon}}
+	},
+	"forecast":[
+		{"label":"Now","content":"{{forecast.currently.summary}}, {{forecast.currently.temperature}}&deg;F"},
+		{"label":"Rest of today","content":"{{forecast.hourly.summary}}"},
+		{"label":"Next couple of days","content":"{{forecast.daily.summary}}"}
+	]
+	{% endif %}
+}
+	
