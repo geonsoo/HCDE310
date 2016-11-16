@@ -1,0 +1,32 @@
+<html>
+<head>
+	<title>Forecast{% if lat %}: {{lat}},{{lon}}{% endif %}</title>
+	<link rel="stylesheet" type="text/css" href="/assets/style.css" />
+</head>
+<body>
+<form id="searchbox" method="post" action="" name="search">
+	<h1>Search</h1>
+	<label for="lat">Latitude: </label><input type="text" id="lat" name="lat"/>
+	<label for="long">Longitude: </label><input type="text" id="lon" name="lon"/>
+	<input type="submit" value="Search" name="submit" />
+</form>
+{% if message %}
+<p class="errormsg">{{message}}</p>
+{% elif forecast %}
+<div class="forecast">
+	<strong>Forecast for: {{lat}},{{lon}}</strong>
+	<table>
+		<tr>
+			<th>Now:</td><td>{{forecast.currently.summary}}, {{forecast.currently.temperature}}&deg;F</td>
+		</tr>
+		<tr>
+			<th>Rest of today:</th><td>{{forecast.hourly.summary}}</td>
+		</tr>
+		<tr>
+			<th>Next couple of days:</th><td>{{forecast.daily.summary}}</td>
+		</tr>
+	</table>
+</div>
+{% endif %}
+</body>
+</html>
