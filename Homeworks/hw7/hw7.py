@@ -279,7 +279,7 @@ if __name__ == '__main__':
     page.write('<body>\n')
 
     
-    img_template = '<a title="%s"><img src="%s"/ alt="image from %s"></a>\n'
+    img_template = '<a title="%s"><img src="%s" width="150" height="150"/ alt="image from %s"></a>\n'
     page.write('\nBy Tags\n')
     page.write('<br></br>')
     
