@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>{{page_title}}</title>
+        <link rel="icon" href="assets/man.ico">
+        <link rel="stylesheet" type="text/css" href="stylesheet/style.css">
+    </head>
+
+    <body>
+        <h1>Photo Finder</h1>
+        <h2 id="subheader">These are the pictures you are looking for:</h2>
+        {% for photo in username %}
+        <img src={{photo}}>
+        {% endfor %}
+        <p><a href = 'greetings'>Go back</a></p>
+    </body>
+</html>

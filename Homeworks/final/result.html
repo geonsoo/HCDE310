@@ -1,0 +1,15 @@
+<html>
+<head>
+	<title>{{name}}</title>
+	<style type='text/css'>
+	{% include "mystyle.css"%}
+	</style>
+</head>
+<body>
+	<h1>Results for {{name}}</h1>
+	{% for curr in photos %}
+		<img src="{{curr.thumbnailURL}}" alt=""/>
+	{% endfor %}
+	<p><a href = 'greetresponse'>Search other company?</a></p>
+</body>
+</html>

@@ -1,0 +1,17 @@
+
+<html>
+    <head>
+        <title>{{page_title}}</title>
+    </head>
+    <body>
+        <form action="gresponse" method="post">
+            <label for="username">Search here:</label>
+            <input type="text" id="username" name="username" />
+            <br>
+
+            <input type="submit" value="Go" name="gobtn"/> </form>
+        {% if prompt %}
+        <div class= 'formtitle'>{{prompt}}</div>
+        {% endif %}
+    </body>
+</html>
